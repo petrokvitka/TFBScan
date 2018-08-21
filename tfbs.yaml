@@ -1,0 +1,14 @@
+name: tfbs
+
+channels:
+  - bioconda
+  - conda-forge
+
+dependencies:
+  - snakemake
+  - meme
+  - moods
+  - biopython
+  - pybedtools
+  - matplotlib
+  - seaborn
