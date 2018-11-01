@@ -16,6 +16,7 @@ import logging
 import subprocess
 from Bio import SeqIO
 import Bio.SeqIO.FastaIO as bio
+import textWrap
 import MOODS.scan
 import MOODS.tools
 import MOODS.parsers
