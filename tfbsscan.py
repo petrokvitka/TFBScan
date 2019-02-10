@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 """
 TFBSscan.py produces the data to be used to join the footprint and motif information across genome
 
@@ -16,17 +18,17 @@ import logging
 import subprocess
 from Bio import SeqIO
 import Bio.SeqIO.FastaIO as bio
-import textWrap
+import textwrap
 import MOODS.scan
 import MOODS.tools
 import MOODS.parsers
 
-logger = logging.getLogger('mytool')
+logger = logging.getLogger('tfbsscan')
 logger.setLevel(logging.INFO)
 
 formatter = logging.Formatter("%(asctime)s : %(message)s", "%Y-%m-%d %H:%M")
 
-fh = logging.FileHandler('final_log.txt')
+fh = logging.FileHandler('tfbsscan.log')
 fh.setLevel(logging.INFO)
 fh.setFormatter(formatter)
 logger.addHandler(fh)
@@ -38,7 +40,7 @@ logger.addHandler(ch)
 
 #catch all the information about input and output files as well as information on the used tool (fimo or moods)
 def parse_args():
-	parser = argparse.ArgumentParser(prog = 'mytool_ver6', description = textwrap.dedent('''
+	parser = argparse.ArgumentParser(prog = 'tfbsscan', description = textwrap.dedent('''
 
 		This script takes a list of motifs loaded from jaspar.genereg.net as a combined text file in MEME or .PFM format, a genome file in FASTA format and optionaly a .bed file (the one you want to be merged with the whole genome file) as input. If you want to merge a .bed file with the whole genome file, please enter --bed_file or -b bevor your .bed file. The tool will provide a file output_merge.fa, which you can also use for your research later on. If you already have a merged file, please give this one as genome file input. If there are several motifs in the input file, the tool will create a separate output file for each motif. Choose if you want to use fimo or moods with --use, this script uses by default fimo. Please note that the tool can not provide the calculation of q values with fimo due to the text mode that fimo needs to use. The tool sends merged genome file and motifs to fimo or moods, saves the sorted output for each of the given motifs as moods/fimo_output_[alternate name and id of the motif].txt in the output directory, then calculates the start and the end as real positions on the chromosom and writes this information in the ouput files. The columns in the output file are: chromosom, start, end, the name and score of TF. If a .bed file was given as input, the tool will also add the additional columns from it to the output. If the output file is empty, there were no machtes within given genome regions. Please note, if you want to have all intermediate output files, enter --clean nothing
 
@@ -317,10 +319,10 @@ def call_fimo(fimo_data, p_value, one_motif, genome, output_directory):
 		#if the file was converted from pfm, the second column contains the positions, so we want to sort using this column, and not the next one
 		second_line = subprocess.getoutput("sed -n '2{p;q}' " + fimo_output_unsorted)
 		if re.split('\t', second_line)[2].startswith("chr"): #the re.split[1] is a ' ', so take the [2]
-			os.system("cat " + fimo_output_unsorted + " | sort -k 2 -V > " + fimo_output_file)
+			os.system("tail -n +2 " + fimo_output_unsorted + " | sort -k 2 -V > " + fimo_output_file) #while sorting do not regard the header written by fimo
 		else:
 			#we are sorting after the third column, which looks like chr1:123-126, -V means it will sort the digitals and not the strings
-			os.system("cat " + fimo_output_unsorted + " | sort -k 3 -V > " + fimo_output_file)
+			os.system("tail -n +2 " + fimo_output_unsorted + " | sort -k 3 -V > " + fimo_output_file)
 
 		#make sure the output of fimo exists
 		if not os.path.isfile(fimo_output_file):
@@ -423,11 +425,11 @@ def call_moods(one_motif, genome, output_directory, p_value, moods_bg):
 						#moods_output_file_unsorted.write('\t'.join([motif_id, motif_alternate_name, chromosom, str(start), str(end), strand, str(score)]) + '\n')
 						moods_output_file_unsorted.write('\t'.join([motif_id, motif_alternate_name, chromosom, str(start), str(end), strand, score]) + '\n')
 
-		#now sort the output of moods
-		os.system("cat " + moods_output_unsorted_name + " | sort -k 1 -V > " + moods_output_name)
-
 		moods_output_file_unsorted.close()
 		moods_output_file.close()
+
+		#now sort the output of moods
+		os.system("cat " + moods_output_unsorted_name + " | sort -k 1 -V > " + moods_output_name)
 
 		return moods_output_name
 
@@ -672,6 +674,9 @@ def make_bed_dictionary(bed_file):
 				value = []
 				for i in range(3, len(bed_line_array)):
 					value.append(bed_line_array[i]) 
+					
+				if not value: #if there is no bonus information in the original bed file, add a "." to the coulmn in the output bed file
+					value = ["."]
 
 				bed_dictionary[key] = value
 			else: #this is not a bed file, force exit
@@ -712,13 +717,12 @@ def check_existing_input_files(args):
 
 def check_fimo_version():
 	fimo_version = subprocess.getoutput("fimo --version") #works only on python 3.4
-	fimo_version = int(fimo_version.replace('.', '')) #reaplace the . in the version to be able to compare it as int
-	if fimo_version < 4120:
+	#fimo_version = int(fimo_version.replace('.', '')) #replace the . in the version to be able to compare it as int
+	if fimo_version < "4.12.0":
 		logger.info('please make sure you are using fimo version 4.12.0 or the newer one')
 		sys.exit()
 
 def main():
-
 
 	args = parse_args()
 	
