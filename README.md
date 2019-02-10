@@ -59,8 +59,9 @@ There are several options to customize the TFBSscan:
 * `--moods_bg 0.25 0.25 0.25 0.25` to set hte background for MOODS. By default the standard MOODS background is used which is 0.25 0.25 0.25 0.25;
 * `--hide_info` to print the information about the run only to the log-file. By default all the information is printed to the terminal.
 
+## Example data
 
-
+To try how the TFBSscan works, the test data was uploaded to the folder [example](./example). The file with 3 random motifs was downloaded from the [JASPAR database](http://jaspar.genereg.net/) in .MEME format. The fasta file [mm10](http://hgdownload.cse.ucsc.edu/goldenPath/mm10/chromosomes/) with the first chromosome was not uploaded to the [example](./example) folder.
 
 
 
