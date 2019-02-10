@@ -1,0 +1,15 @@
+2019-02-10 14:38 : a new directory example_output was created
+2019-02-10 14:38 : the file with motifs example/3_motifs.meme will be checked for motifs and if needed splitted in files each containing only one motif
+2019-02-10 14:38 : fimo proceed the data using this call fimo --text --no-qvalue --thresh 0.0001 example_output/ELK1_MA0028.2.meme ../chr1.fa > example_output/fimo_output_unsorted_ELK1_MA0028.2.txt
+2019-02-10 14:38 : fimo proceed the data using this call fimo --text --no-qvalue --thresh 0.0001 example_output/JUND_MA0491.1.meme ../chr1.fa > example_output/fimo_output_unsorted_JUND_MA0491.1.txt
+2019-02-10 14:39 : info from fimo: Using motif +MA0028.2 of width 10.
+2019-02-10 14:39 : info from fimo: Using motif -MA0028.2 of width 10.
+2019-02-10 14:39 : writing the output file example_output/ELK1_MA0028.2.bed
+2019-02-10 14:39 : fimo proceed the data using this call fimo --text --no-qvalue --thresh 0.0001 example_output/CTCF_MA0139.1.meme ../chr1.fa > example_output/fimo_output_unsorted_CTCF_MA0139.1.txt
+2019-02-10 14:39 : info from fimo: Using motif +MA0491.1 of width 11.
+2019-02-10 14:39 : info from fimo: Using motif -MA0491.1 of width 11.
+2019-02-10 14:39 : writing the output file example_output/JUND_MA0491.1.bed
+2019-02-10 14:41 : info from fimo: Using motif +MA0139.1 of width 19.
+2019-02-10 14:41 : info from fimo: Using motif -MA0139.1 of width 19.
+2019-02-10 14:41 : writing the output file example_output/CTCF_MA0139.1.bed
+2019-02-10 14:41 : the directory example_output was cleaned, only the required files were left
