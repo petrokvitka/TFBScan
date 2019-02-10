@@ -4,6 +4,8 @@ Transcription factors play an important role in the gene regulation. To search f
 
 ## Installation
 
+Please mention that [CONDA](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) is needed for the installation of the TFBSscan.
+
 1. Clone the directory
 ```bash
 git clone https://github.com/petrokvitka/TFBScan
@@ -20,7 +22,7 @@ conda env create --file tfbs.yaml
 ```bash
 source activate tfbs
 ```
-5. You are ready to use the TFBS scan! To learn how to use TFBS scan, just type 
+5. You are ready to use the TFBSscan! To learn how to use TFBSscan, just type 
 ```bash
 python tfbsscan.py
 ```
