@@ -67,6 +67,7 @@ To try how the TFBSscan works, the test data was uploaded to the folder [example
 python tfbsscan.py -g ../chr1.fa -m example/3_motifs.meme -o example_output
 ```
 
+There are three output files in .BED format in the example_output folder and a [logfile](./example_output/tfbsscan.log) containing information about the run. Each of the output .BED files contains the binding sites of the corresponding motif for the first chromosome of the mm10 genome.
 
 
 
