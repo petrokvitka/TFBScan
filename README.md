@@ -61,7 +61,11 @@ There are several options to customize the TFBSscan:
 
 ## Example data
 
-To try how the TFBSscan works, the test data was uploaded to the folder [example](./example). The file with 3 random motifs was downloaded from the [JASPAR database](http://jaspar.genereg.net/) in .MEME format. The fasta file [mm10](http://hgdownload.cse.ucsc.edu/goldenPath/mm10/chromosomes/) with the first chromosome was not uploaded to the [example](./example) folder.
+To try how the TFBSscan works, the test data was uploaded to the folder [example](./example). The file with 3 random motifs was downloaded from the [JASPAR database](http://jaspar.genereg.net/) in .MEME format. The fasta file [mm10](http://hgdownload.cse.ucsc.edu/goldenPath/mm10/chromosomes/) with the first chromosome is used to create the file in the [example_output](./example_output) folder. The TFBSscan call used for this example is:
+
+```bash
+python tfbsscan.py -g ../chr1.fa -m example/3_motifs.meme -o example_output
+```
 
 
 
